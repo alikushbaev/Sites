@@ -9,6 +9,7 @@
         body {
             background-color: black;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
@@ -27,9 +28,20 @@
         .download-button:hover {
             background-color: #1e3a8a;
         }
+        .image-container {
+            margin-bottom: 20px;
+        }
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
     </style>
 </head>
 <body>
+    <div class="image-container">
+        <img src="smartscreen.png" alt="SmartScreen Warning">
+    </div>
     <div class="text-center">
         <h1 class="text-white text-4xl font-bold mb-6">Привет, Скачай Лудший Бат Помощник by ali</h1>
         <a href="https://github.com/alikushbaev/Sites/raw/refs/heads/main/projectc%23.exe" class="download-button" download>Скачать Installer</a>

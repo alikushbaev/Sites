@@ -24,6 +24,8 @@
             border-radius: 8px;
             text-decoration: none;
             transition: background 0.3s ease;
+            display: inline-block;
+            margin-bottom: 20px;
         }
         .download-button:hover {
             background-color: #1e3a8a;
@@ -36,6 +38,15 @@
             height: auto;
             border-radius: 8px;
         }
+        .video-container {
+            margin-top: 20px;
+            width: 80%;
+            max-width: 720px;
+        }
+        .video-container video {
+            width: 100%;
+            border-radius: 8px;
+        }
     </style>
 </head>
 <body>
@@ -45,6 +56,12 @@
     <div class="text-center">
         <h1 class="text-white text-4xl font-bold mb-6">Привет, Скачай Лудший Бат Помощник by ali</h1>
         <a href="https://github.com/alikushbaev/Sites/raw/refs/heads/main/projectc%23.exe" class="download-button" download>Скачать Installer</a>
+    </div>
+    <div class="video-container">
+        <video controls>
+            <source src="installbat.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
     </div>
 </body>
 </html>

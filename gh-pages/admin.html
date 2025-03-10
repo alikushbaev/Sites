@@ -3,36 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Download Page</title>
+    <title>Admin Panel</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
-            background-color: black;
+            background-color: #1e1e1e;
+            color: white;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            margin: 0;
         }
-        .download-button {
-            background-color: #1e40af;
-            color: white;
-            font-size: 1.5rem;
-            font-weight: bold;
-            padding: 12px 24px;
+        .container {
+            width: 80%;
+            max-width: 600px;
+            background: #2a2a2a;
+            padding: 20px;
             border-radius: 8px;
-            text-decoration: none;
-            transition: background 0.3s ease;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
         }
-        .download-button:hover {
-            background-color: #1e3a8a;
+        .hidden {
+            display: none;
         }
     </style>
 </head>
 <body>
-    <div class="text-center">
-        <h1 class="text-white text-4xl font-bold mb-6">Welcome to Our Site</h1>
-        <a href="https://github.com/alikushbaev/Sites/raw/refs/heads/main/projectc%23.exe" class="download-button" download>Download</a>
+    <div id="login" class="container">
+        <h2 class="text-2xl font-bold mb-4">Admin Login</h2>
+        <input id="username" type="text" placeholder="Username" class="w-full p-2 mb-2 rounded"/>
+        <input id="password" type="password" placeholder="Password" class="w-full p-2 mb-2 rounded"/>
+        <button onclick="login()" class="bg-blue-600 w-full p-2 rounded text-white">Login</button>
     </div>
+    
+    <div id="admin-panel" class="container hidden">
+        <h2 class="text-2xl font-bold mb-4">Admin Panel</h2>
+        <h3 class="text-xl font-bold">Manage Downloads</h3>
+        <input id="newDownload" type="text" placeholder="New Download Link" class="w-full p-2 mb-2 rounded"/>
+        <button onclick="addDownload()" class="bg-green-600 w-full p-2 rounded text-white">Add Download</button>
+        <ul id="downloads" class="mt-4"></ul>
+    </div>
+
+    <script>
+        const adminUser = "admin";
+        const adminPass = "password";
+
+        function login() {
+            let user = document.getElementById("username").value;
+            let pass = document.getElementById("password").value;
+            if (user === adminUser && pass === adminPass) {
+                document.getElementById("login").classList.add("hidden");
+                document.getElementById("admin-panel").classList.remove("hidden");
+            } else {
+                alert("Invalid credentials!");
+            }
+        }
+
+        function addDownload() {
+            let link = document.getElementById("newDownload").value;
+            if (link) {
+                let li = document.createElement("li");
+                li.innerHTML = `${link} <button onclick="this.parentElement.remove()" class='text-red-500'>[Remove]</button>`;
+                document.getElementById("downloads").appendChild(li);
+                document.getElementById("newDownload").value = "";
+            }
+        }
+    </script>
 </body>
 </html>

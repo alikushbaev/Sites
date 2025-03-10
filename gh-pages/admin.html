@@ -26,6 +26,12 @@
         .hidden {
             display: none;
         }
+        .download-item {
+            background: #444;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
@@ -38,15 +44,20 @@
     
     <div id="admin-panel" class="container hidden">
         <h2 class="text-2xl font-bold mb-4">Admin Panel</h2>
-        <h3 class="text-xl font-bold">Manage Downloads</h3>
-        <input id="newDownload" type="text" placeholder="New Download Link" class="w-full p-2 mb-2 rounded"/>
-        <button onclick="addDownload()" class="bg-green-600 w-full p-2 rounded text-white">Add Download</button>
+        
+        <!-- Блок с отображением ссылок -->
+        <h3 class="text-xl font-bold">Download Links</h3>
         <ul id="downloads" class="mt-4"></ul>
+
+        <!-- Блок смены версии -->
+        <h3 class="text-xl font-bold mt-6">Change BAT Version</h3>
+        <input id="newVersion" type="text" placeholder="New Version" class="w-full p-2 mb-2 rounded"/>
+        <button onclick="updateVersion()" class="bg-yellow-600 w-full p-2 rounded text-white">Update Version</button>
     </div>
 
     <script>
-        const adminUser = "admin";
-        const adminPass = "password";
+        const adminUser = "jamshidkushbaev";
+        const adminPass = "jamshidkushbaev565";
 
         function login() {
             let user = document.getElementById("username").value;
@@ -54,19 +65,41 @@
             if (user === adminUser && pass === adminPass) {
                 document.getElementById("login").classList.add("hidden");
                 document.getElementById("admin-panel").classList.remove("hidden");
+                loadDownloads();
             } else {
                 alert("Invalid credentials!");
             }
         }
 
-        function addDownload() {
-            let link = document.getElementById("newDownload").value;
-            if (link) {
-                let li = document.createElement("li");
-                li.innerHTML = `${link} <button onclick="this.parentElement.remove()" class='text-red-500'>[Remove]</button>`;
-                document.getElementById("downloads").appendChild(li);
-                document.getElementById("newDownload").value = "";
+        async function loadDownloads() {
+            try {
+                const response = await fetch('admin.php');
+                const links = await response.json();
+                const downloadList = document.getElementById('downloads');
+                downloadList.innerHTML = '';
+
+                links.forEach(link => {
+                    let li = document.createElement('li');
+                    li.className = "download-item";
+                    li.innerHTML = `<span>${link}</span>`;
+                    downloadList.appendChild(li);
+                });
+            } catch (error) {
+                console.error("Error loading downloads:", error);
             }
+        }
+
+        async function updateVersion() {
+            let newVersion = document.getElementById("newVersion").value;
+            if (!newVersion) return alert("Enter a valid version");
+
+            await fetch('admin.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({ action: 'updateVersion', version: newVersion })
+            });
+
+            alert("Version updated!");
         }
     </script>
 </body>

@@ -11,38 +11,37 @@
     <button onclick="sendError()">Submit Report</button>
 
     <script>
-        async function sendError() {
-            const errorText = document.getElementById("errorMessage").value;
-            if (!errorText) {
-                alert("Please enter an error description.");
-                return;
-            }
-
-            const repoOwner = "alikushbaev"; // Твой GitHub username
-            const repoName = "Sites";      // Название репозитория
-            const token = "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"; // GitHub Token
-
-            const issueData = {
-                title: "New Error Report",
-                body: errorText
-            };
-
-            const response = await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/issues`, {
-                method: "POST",
-                headers: {
-                    "Authorization": `token ${token}`,
-                    "Accept": "application/vnd.github.v3+json",
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(issueData)
-            });
-
-            if (response.ok) {
-                alert("Error reported successfully!");
-            } else {
-                alert("Failed to report error.");
+        async function reportError() {
+        const repoOwner = "alikushbaev";  // Твой GitHub username
+        const repoName = "Sites";         // Твой репозиторий
+        const bb = "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";
+    
+        const issueData = {
+            title: "Ошибка на сайте",
+            body: "Описание ошибки..."
+        };
+    
+        const response = await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/issues`, {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${bb}`, // ВАЖНО: "Bearer", а не "token"
+                "Accept": "application/vnd.github.v3+json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(issueData)
+        });
+    
+        const data = await response.json();
+    
+        if (response.ok) {
+            alert("✅ Ошибка успешно отправлена!");
+            console.log("Issue создан:", data);
+        } else {
+            alert("❌ Не удалось отправить ошибку: " + data.message);
+            console.error("Ошибка:", data);
             }
         }
+
     </script>
 </body>
 </html>

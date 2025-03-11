@@ -1,1 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 
+    <style>
+        body {
+            background-color: black;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .download-button {
+            background-color: #1e40af;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background 0.3s ease;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        .download-button:hover {
+            background-color: #1e3a8a;
+        }
+        .image-container {
+            margin-bottom: 20px;
+        }
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        .video-container {
+            margin-top: 20px;
+            width: 80%;
+            max-width: 720px;
+        }
+        .video-container video {
+            width: 100%;
+            border-radius: 8px;
+        }
+    </style>
+    <script>
+        async function loadVersion() {
+            try {
+                const response = await fetch('version.txt');
+                const version = await response.text();
+                document.getElementById('version-title').innerText += ` ${version.trim()}`;
+            } catch (error) {
+                console.error('Error loading version:', error);
+            }
+        }
+        window.onload = loadVersion;
+    </script>
+</head>
+<body>
+    <div class="text-center">
+        <h1 id="version-title" class="text-white text-4xl font-bold mb-6">Софт Бат</h1>
+        <h1 class="text-white text-4xl font-bold mb-6">-------------------------------------------------------------------------------------------------</h1>
+    </div>
+    <div class="image-container">
+        <img src="smartscreen.png" alt="SmartScreen Warning">
+    </div>
+    <div class="text-center">
+        <h1 id="version-title" class="text-white text-4xl font-bold mb-6">Привет, Скачай Лудший Бат Помощник by ali</h1>
+        <a href="https://github.com/alikushbaev/Sites/raw/refs/heads/main/Bat_Installer.exe" class="download-button" download>Скачать Installer</a>
+    </div>
+    <div class="video-container">
+        <video controls>
+            <source src="installbat.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+    <div class="text-center">
+    <a href="https://alikushbaev.github.io/Sites/BatAssistent.html" class="download-button">1</a>
+    <a href="https://alikushbaev.github.io/Sites/IsoByAli.html" class="download-button">2</a>
+    <a href="https://alikushbaev.github.io/Sites/AIAssistent.html" class="download-button">3</a>
+    </div>
+</body>
+</html>

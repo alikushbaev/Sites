@@ -1,1 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error Reporter</title>
+</head>
+<body>
+    <h2>Report an Error</h2>
+    <textarea id="errorMessage" placeholder="Describe the error..." rows="5" cols="50"></textarea><br>
+    <button onclick="sendError()">Submit Report</button>
+
+    <script>
+        async function sendError() {
+            const errorText = document.getElementById("errorMessage").value;
+            if (!errorText) {
+                alert("Please enter an error description.");
+                return;
+            }
+
+            const repoOwner = "alikushbaev"; // Твой GitHub username
+            const repoName = "Sites";      // Название репозитория
+            const token = "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"; // GitHub Token
+
+            const issueData = {
+                title: "New Error Report",
+                body: errorText
+            };
+
+            const response = await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/issues`, {
+                method: "POST",
+                headers: {
+                    "Authorization": `token ${token}`,
+                    "Accept": "application/vnd.github.v3+json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(issueData)
+            });
+
+            if (response.ok) {
+                alert("Error reported successfully!");
+            } else {
+                alert("Failed to report error.");
+            }
+        }
+    </script>
+</body>
+</html>
 

@@ -49,22 +49,10 @@
             border-radius: 8px;
         }
     </style>
-    <script>
-        async function loadVersion() {
-            try {
-                const response = await fetch('version.txt');
-                const version = await response.text();
-                document.getElementById('version-title').innerText += ` ${version.trim()}`;
-            } catch (error) {
-                console.error('Error loading version:', error);
-            }
-        }
-        window.onload = loadVersion;
-    </script>
 </head>
 <body>
     <div class="text-center">
-        <h1 id="version-title" class="text-white text-4xl font-bold mb-6">Софт Бат</h1>
+        <h1 id="version-title" class="text-white text-4xl font-bold mb-6">Софт AI Помощник</h1>
         <h1 class="text-white text-4xl font-bold mb-6">-------------------------------------------------------------------------------------------------</h1>
     </div>
     <div class="image-container">
@@ -72,7 +60,7 @@
     </div>
     <div class="text-center">
         <h1 id="version-title" class="text-white text-4xl font-bold mb-6">Привет, Скачай Лудший Бат Помощник by ali</h1>
-        <a href="https://github.com/alikushbaev/Sites/raw/refs/heads/main/Bat_Installer.exe" class="download-button" download>Скачать Installer</a>
+        <a href="https://github.com/alikushbaev/Sites/raw/refs/heads/main/AI_Installer.exe" class="download-button" download>Скачать Installer</a>
     </div>
     <div class="video-container">
         <video controls>

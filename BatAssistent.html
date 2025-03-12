@@ -20,6 +20,8 @@
                 userName = "Гость"; // Если ничего не ввели, показываем "Гость"
             }
         }
+        let userNames = localStorage.getItem("userName"); 
+        console.log(userNames); // Выведет имя в консоль
     
         // Добавляем имя на страницу
         document.addEventListener("DOMContentLoaded", () => {

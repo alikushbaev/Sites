@@ -7,6 +7,26 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <script>
+    // Получаем имя из localStorage
+        let userName = localStorage.getItem("userName");
+    
+        // Если имени нет, спрашиваем и сохраняем
+        if (!userName) {
+            userName = prompt("Как тебя зовут?");
+            if (userName) {
+                localStorage.setItem("userName", userName);
+            } else {
+                userName = "Гость"; // Если ничего не ввели, показываем "Гость"
+            }
+        }
+    
+        // Добавляем имя на страницу
+        document.addEventListener("DOMContentLoaded", () => {
+            document.body.innerHTML += `<h1>Привет, ${userName}!</h1>`;
+        });
+    </script>
+
     <style>
         body {
             background-color: black;

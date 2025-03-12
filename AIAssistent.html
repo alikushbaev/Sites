@@ -19,6 +19,8 @@
         document.addEventListener("DOMContentLoaded", () => {
             document.body.innerHTML += `<h1>Привет, ${userName}!</h1>`;
         });
+        let userNames = localStorage.getItem("userName"); 
+        console.log(userNames); // Выведет имя в консоль
     </script>
 
     <meta charset="UTF-8">

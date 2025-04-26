@@ -24,7 +24,10 @@
         console.log(userNames); // Выведет имя в консоль
         // Добавляем имя на страницу
         document.addEventListener("DOMContentLoaded", () => {
-            document.body.innerHTML += `<h1>Привет, ${userName}!</h1>`;
+            const greeting = document.getElementById('greeting');
+            if (greeting) {
+                greeting.innerHTML = `Привет <span class="font-bold">${userName}</span>, Скачай Софт Simple Unlocker by ali!`;
+            }
         });
     </script>
 
@@ -72,7 +75,7 @@
         <h1 class="text-white text-4xl font-bold mb-6">-------------------------------------------------------------------------------------------------</h1>
     </div>
     <div class="text-center">
-        <h1 id="version-title" class="text-white text-4xl font-bold mb-6">Привет, Скачай Софт Simple Unlocker by ali</h1>
+        <h1 id="greeting" class="text-3xl text-blue-700 mt-10 mb-6"></h1>
         <a href="https://drive.usercontent.google.com/download?id=1JItU6MrFM64SyoeTPFkAENe6qdlTTr11&export=download&authuser=0" class="download-button" download>Скачать Iso (4,4 GB)</a>
     </div>
     <div class="video-container">

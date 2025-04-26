@@ -1,1 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <script>
+        // Получаем имя из localStorage
+        let userName = localStorage.getItem("userName");
+
+        // Если имени нет, спрашиваем и сохраняем
+        if (!userName) {
+            userName = prompt("Как тебя зовут?");
+            if (userName) {
+                localStorage.setItem("userName", userName);
+            } else {
+                userName = "Гость"; // Если ничего не ввели, показываем "Гость"
+            }
+        }
+        console.log(userName); // Выведет имя в консоль
+
+        // Добавляем имя на страницу после загрузки
+        document.addEventListener("DOMContentLoaded", () => {
+            const greeting = document.getElementById('greeting');
+            if (greeting) {
+                greeting.innerHTML = `Привет, <span class="font-bold">${userName}</span>!`;
+            }
+        });
+    </script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center justify-start p-6">
+    <!-- Greeting -->
+    <h1 id="greeting" class="text-3xl text-blue-700 mt-10 mb-6"></h1>
+
+    <!-- Download Section -->
+    <div class="w-full max-w-2xl bg-white shadow-lg rounded-2xl p-8">
+        <h2 class="text-2xl font-semibold mb-4 text-center">Старые версии</h2>
+        <ul class="space-y-4">
+            <li class="flex justify-between items-center p-4 border rounded-lg hover:bg-gray-50 transition">
+                <span>Версия 1.0 ❌Провалилось❌</span>
+                <a href="https://github.com/alikushbaev/bothelp/raw/refs/heads/main/bat1.0.exe" download class="text-white bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded-lg">Скачать</a>
+            </li>
+            <li class="flex justify-between items-center p-4 border rounded-lg hover:bg-gray-50 transition">
+                <span>Версия 2.0 ✅Работает✅</span>
+                <a href="https://github.com/alikushbaev/bothelp/raw/refs/heads/main/bat2.0ultraplus.exe" download class="text-white bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded-lg">Скачать</a>
+            </li>
+            <li class="flex justify-between items-center p-4 border rounded-lg hover:bg-gray-50 transition">
+                <span>Версия 3.0 ✅Работает✅</span>
+                <a href="https://github.com/alikushbaev/bothelp/raw/refs/heads/main/bat3.0admin+ultra.exe" download class="text-white bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded-lg">Скачать</a>
+            </li>
+            <li class="flex justify-between items-center p-4 border rounded-lg hover:bg-gray-50 transition">
+                <span>Версия 4.0 ⚠️Надо Нужный Приложение .net runtime 8.0⚠️ А то Всё ✅Работает✅</span>
+                <a href="https://github.com/alikushbaev/Sites/raw/refs/heads/main/Bat_4.0,%20%D1%81%20%D0%B0%D0%B2%D1%82%D0%BE%20%D0%BE%D0%B1%D0%BD%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5.exe" download class="text-white bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded-lg">Скачать</a>
+            </li>
+            <li class="flex justify-between items-center p-4 border rounded-lg hover:bg-gray-50 transition">
+                <span>Версия 5.0 (Новый Верся) ⚠️Надо Нужный Приложение В Zip Комплекте ⚠️ А то Всё ✅Работает✅</span>
+                <a href="https://drive.usercontent.google.com/download?id=1xWL13KH5I4LdZiK6NlVre-0gBUjK3AH6&export=download&authuser=0" download class="text-white bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded-lg">Скачать</a>
+            </li>
+            <li class="flex justify-between items-center p-4 border rounded-lg hover:bg-gray-50 transition">
+                <span>Simple Unlocker by ali 1.0 (Новый Верся) ✅Работает✅</span>
+                <a href="https://drive.google.com/file/d/1ydZ_x5n2ITQsd-DZHzNjuGbNKXRdjvQO/view?usp=drive_link" download class="text-white bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded-lg">Скачать</a>
+            </li>
+            <li class="flex justify-between items-center p-4 border rounded-lg hover:bg-gray-50 transition">
+                <span>AI by ali 1.0 (Новый Верся) ✅Работает✅</span>
+                <a href="https://github.com/alikushbaev/Sites/raw/refs/heads/main/AI_Installer.exe" download class="text-white bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded-lg">Скачать</a>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
 

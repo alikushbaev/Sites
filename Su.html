@@ -1,92 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Download Page</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    <script>
-        // Получаем имя из localStorage
-        let userName = localStorage.getItem("userName");
-    
-        // Если имени нет, спрашиваем и сохраняем
-        if (!userName) {
-            userName = prompt("Как тебя зовут?");
-            if (userName) {
-                localStorage.setItem("userName", userName);
-            } else {
-                userName = "Гость"; // Если ничего не ввели, показываем "Гость"
-            }
-        }
-        let userNames = localStorage.getItem("userName"); 
-        console.log(userNames); // Выведет имя в консоль
-        // Добавляем имя на страницу
-        document.addEventListener("DOMContentLoaded", () => {
-            const greeting = document.getElementById('greeting');
-            if (greeting) {
-                greeting.innerHTML = `Привет <span class="font-bold">${userName}</span>, Скачай Софт Simple Unlocker by ali!`;
-            }
-        });
-    </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Download Page</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
-    <style>
-        body {
-            background-color: black;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-        }
-        .download-button {
-            background-color: #1e40af;
-            color: white;
-            font-size: 1.5rem;
-            font-weight: bold;
-            padding: 12px 24px;
-            border-radius: 8px;
-            text-decoration: none;
-            transition: background 0.3s ease;
-            display: inline-block;
-            margin-bottom: 20px;
-        }
-        .download-button:hover {
-            background-color: #1e3a8a;
-        }
-        .video-container {
-            margin-top: 20px;
-            width: 80%;
-            max-width: 720px;
-        }
-        .video-container iframe {
-            width: 100%;
-            height: 405px;
-            border-radius: 8px;
-            border: none;
-        }
-    </style>
+  <script>
+    // Получаем имя из localStorage
+    let userName = localStorage.getItem("userName");
+
+    // Если имени нет, спрашиваем и сохраняем
+    if (!userName) {
+      userName = prompt("Как тебя зовут?");
+      if (userName) {
+        localStorage.setItem("userName", userName);
+      } else {
+        userName = "Гость"; // Если ничего не ввели, показываем "Гость"
+      }
+    }
+
+    // Добавляем имя на страницу после загрузки
+    document.addEventListener("DOMContentLoaded", () => {
+      const greeting = document.getElementById('greeting');
+      if (greeting) {
+        greeting.innerHTML = `Привет <span class="font-bold">${userName}</span>, скачай Софт Simple Unlocker by Ali!`;
+      }
+      console.log(userName); // Выводим имя в консоль
+    });
+  </script>
+
+  <style>
+    body {
+      background-color: black;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .download-button {
+      background-color: #1e40af;
+      color: white;
+      font-size: 1.5rem;
+      font-weight: bold;
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.3s ease;
+      display: inline-block;
+      margin: 10px;
+    }
+    .download-button:hover {
+      background-color: #1e3a8a;
+    }
+    .video-container {
+      margin-top: 20px;
+      width: 80%;
+      max-width: 720px;
+    }
+    .video-container iframe {
+      width: 100%;
+      height: 405px;
+      border-radius: 8px;
+      border: none;
+    }
+  </style>
 </head>
 <body>
-    <div class="text-center">
-        <h1 id="version-title" class="text-white text-4xl font-bold mb-6">Софт Simple Unlocker</h1>
-        <h1 class="text-white text-4xl font-bold mb-6">-------------------------------------------------------------------------------------------------</h1>
-    </div>
-    <div class="text-center">
-        <h1 id="greeting" class="text-3xl text-blue-700 mt-10 mb-6"></h1>
-        <a href="https://drive.usercontent.google.com/u/0/uc?id=1ydZ_x5n2ITQsd-DZHzNjuGbNKXRdjvQO&export=download" class="download-button" download>Скачать</a>
-    </div>
-    <div class="video-container">
-        <iframe src="https://www.youtube.com/embed/90EAYrA2P3k?si=ahoJC0XHJFHllz7I" allowfullscreen></iframe>
-    </div>
-    <div class="text-center">
-        <a href="https://alikushbaev.github.io/Sites/BatAssistent.html" class="download-button">1</a>
-        <a href="https://alikushbaev.github.io/Sites/IsoByAli.html" class="download-button">2</a>
-        <a href="https://alikushbaev.github.io/Sites/AIAssistent.html" class="download-button">3</a>
-        <a href="https://alikushbaev.github.io/Sites/Su.html" class="download-button">4</a>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSd7GxPHFbdPcSsDz-0R6Wr6QH0H2w8409m0erTYfClegEp26Q/viewform?usp=header" class="download-button">Репорты</a>
-    </div>
+  <div class="text-center">
+    <h1 id="version-title" class="text-white text-4xl font-bold mb-6">Софт Simple Unlocker</h1>
+    <hr class="border-gray-600 w-3/4 mx-auto mb-6">
+  </div>
+
+  <div class="text-center">
+    <h1 id="greeting" class="text-3xl text-blue-700 mt-10 mb-6"></h1>
+    <a href="https://drive.usercontent.google.com/u/0/uc?id=1ydZ_x5n2ITQsd-DZHzNjuGbNKXRdjvQO&export=download" class="download-button" download>Скачать</a>
+  </div>
+
+  <div class="video-container">
+    <iframe src="https://www.youtube.com/embed/90EAYrA2P3k?si=ahoJC0XHJFHllz7I" allowfullscreen></iframe>
+  </div>
+
+  <div class="text-center mt-10">
+    <a href="https://alikushbaev.github.io/Sites/BatAssistent.html" class="download-button">1</a>
+    <a href="https://alikushbaev.github.io/Sites/IsoByAli.html" class="download-button">2</a>
+    <a href="https://alikushbaev.github.io/Sites/AIAssistent.html" class="download-button">3</a>
+    <a href="https://alikushbaev.github.io/Sites/Su.html" class="download-button">4</a>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSd7GxPHFbdPcSsDz-0R6Wr6QH0H2w8409m0erTYfClegEp26Q/viewform?usp=header" class="download-button">Репорты</a>
+  </div>
 </body>
 </html>

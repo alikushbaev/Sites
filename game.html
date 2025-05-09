@@ -1,251 +1,255 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Tic Tac Toe AI</title>
-    <style>
-body {
-    font-family: 'Courier New', Courier, monospace;
-    text-align: center;
-    background-color: #fafafa;
-    margin-top: 50px;
-}
+  <noscript>
+    <meta http-equiv="refresh" content="0;url=https://alikushbaev.github.io/Sites/Js.html">
+  </noscript>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Games Collection. Колекция Игр.</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      background-color: #f2f2f2;
+      font-family: Arial, sans-serif;
+    }
 
-h1 {
-    font-size: 3rem;
-    color: #333;
-}
-
-.board {
-    display: grid;
-    grid-template-columns: repeat(3, 100px);
-    grid-gap: 10px;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-.cell {
-    width: 100px;
-    height: 100px;
-    background-color: #ddd;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2.5rem;
-    cursor: pointer;
-    border-radius: 8px;
-    transition: background-color 0.3s;
-}
-
-.cell:hover {
-    background-color: #ccc;
-}
-
-#status {
-    margin-top: 20px;
-    font-size: 1.5rem;
-}
-
-#restartButton {
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 1rem;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-#restartButton:hover {
-    background-color: #45a049;
-}
-    body {
-      background-color: black;
+    .game-container {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      margin: 0;
+      gap: 20px;
+      padding: 20px;
+      padding-top: 80px; /* Space for controls */
     }
-    .download-button {
-      background-color: #1e40af;
-      color: white;
-      font-size: 1.5rem;
-      font-weight: bold;
-      padding: 12px 24px;
-      border-radius: 8px;
-      text-decoration: none;
-      transition: background 0.3s ease;
-      display: inline-block;
-      margin: 10px;
-    }
-    .download-button:hover {
-      background-color: #1e3a8a;
-    }
-    .video-container {
-      margin-top: 20px;
-      width: 80%;
-      max-width: 720px;
-    }
-    .video-container iframe {
-      width: 100%;
-      height: 405px;
-      border-radius: 8px;
+
+    iframe {
       border: none;
+      width: 100%;
+      height: 50vh;
+      display: block;
+      background-color: #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
-    </style>
+
+    .fullscreen-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1000;
+      background: #f2f2f2;
+    }
+
+    .fullscreen-overlay iframe {
+      width: 100%;
+      height: 100%;
+    }
+
+    .controls {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1500;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .controls button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      background-color: royalblue;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transition: all 0.3s;
+    }
+
+    .controls button:hover {
+      background-color: darkblue;
+      transform: translateY(-2px);
+    }
+
+    #exitFullscreenBtn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 12px 18px;
+      font-size: 1rem;
+      z-index: 2000;
+      background-color: crimson;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      display: none;
+      transition: all 0.3s;
+    }
+
+    #exitFullscreenBtn:hover {
+      background-color: darkred;
+      transform: scale(1.05);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin: 20px 0;
+    }
+
+    .game-frame {
+      position: relative;
+    }
+
+    .game-label {
+      background-color: royalblue;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 5px 5px 0 0;
+      display: inline-block;
+      margin-bottom: -5px;
+      font-weight: bold;
+    }
+
+    .esc-message {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.7);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 20px;
+      z-index: 3000;
+      display: none;
+    }
+  </style>
 </head>
+
 <body>
-    <h1>Tic Tac Toe (Player vs AI)</h1>
-    <div id="gameBoard" class="board"></div>
-    <p id="status"></p>
-    <button id="restartButton">Restart</button>
-    <noscript>
-    <meta http-equiv="refresh" content="0;url=https://alikushbaev.github.io/Sites/Js.html">
-    </noscript>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <a href="https://alikushbaev.github.io/Sites/BatAssistent.html" class="download-button">1</a>
-    <a href="https://alikushbaev.github.io/Sites/IsoByAli.html" class="download-button">2</a>
-    <a href="https://alikushbaev.github.io/Sites/AIAssistent.html" class="download-button">3</a>
-    <a href="https://alikushbaev.github.io/Sites/Su.html" class="download-button">4</a>
-    <a href="https://alikushbaev.github.io/Sites/isorestorepc.html" class="download-button">5</a>
-    <a href="https://alikushbaev.github.io/Sites/game.html" class="download-button">6(Игра)</a>
-    <a href="https://alikushbaev.github.io/Sites/old_apps_versions.html" class="download-button">Старый Версие</a>
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSd7GxPHFbdPcSsDz-0R6Wr6QH0H2w8409m0erTYfClegEp26Q/viewform?usp=header" class="download-button">Репорты</a>
+  <h1>Games Collection. Колекция Игр.</h1>
+  <div class="esc-message" id="escMessage">Чтобы выйти из полноэкранного режима, нажмите Esc</div>
 
-    <script>
-const board = document.getElementById('gameBoard');
-const statusText = document.getElementById('status');
-const restartButton = document.getElementById('restartButton');
+  <div class="controls" id="controls">
+    <button onclick="enterFullscreen('geometryDash', 'Geometry Dash')">
+      Play Geometry Dash Fullscreen
+    </button>
+    <button onclick="enterFullscreen('flappyBird', 'Flappy Bird')">
+      Play Flappy Bird Fullscreen
+    </button>
+    <button onclick="enterFullscreen('pacman','Pac-man')">
+      Play Pac-man Fullscreen
+    </button>
+  </div>
 
-let cells = Array(9).fill(null);
-let currentPlayer = 'X'; // Player is 'X', AI is 'O'
-let gameActive = true;
+  <button id="exitFullscreenBtn" onclick="exitFullscreen()">Exit Fullscreen</button>
 
-const winningConditions = [
-    [0, 1, 2], [3, 4, 5], [6, 7, 8],
-    [0, 3, 6], [1, 4, 7], [2, 5, 8],
-    [0, 4, 8], [2, 4, 6]
-];
+  <div class="game-container">
+    <div class="game-frame">
+      <div class="game-label">Geometry Dash</div>
+      <iframe id="geometryDash" src="https://scratch.mit.edu/projects/1172518613/embed/" 
+              title="Geometry Dash Game"></iframe>
+    </div>
+    
+    <div class="game-frame">
+      <div class="game-label">Flappy Bird</div>
+      <iframe id="flappyBird" src="https://universal-games-unblocked.vercel.app/projects/flappy-bird/index.html" 
+              title="Flappy Bird Game"></iframe>
+    </div>
+    <div class="game-frame">
+      <div class="game-label">Pac-man</div>
+      <iframe id="pacman" src="https://alikushbaev.github.io/pacman/index.html" 
+              title="Pac-man Game"></iframe>
+    </div>
+  </div>
 
-function handleCellClick(e) {
-    const cellIndex = e.target.getAttribute('data-index');
+  <div id="fullscreenOverlay" class="fullscreen-overlay" style="display: none;"></div>
 
-    if (cells[cellIndex] || !gameActive || currentPlayer !== 'X') return;
+  <script>
+    console.warn(
+      "%cWarning!!", "color: red; font-weight: 600; background: yellow; padding: 0 5px; border-radius: 5px",
+      "This is the part of your browser that is for developers. If someone tells you to copy and paste something here, don't do it! It could allow them to take over your Scratch account or all accounts or google account, delete all your please report it to the Ali Team. Stay safe!"
+    );
 
-    makeMove(cellIndex, 'X');
+    console.clear();
+    console.clear();
+    console.clear();
+    console.clear();
+    console.clear();
+    console.clear();
+    console.warn(
+        "%cWarning!!", "color: red; font-weight: 600; background: yellow; padding: 0 5px; border-radius: 5px",
+        "This is the part of your browser that is for developers. If someone tells you to copy and paste something here, don't do it! It could allow them to take over your Scratch account or all accounts or google account, can delete all data please report it to the Ali Team. Stay safe!"
+    );
+    console.warn(
+        "%cWarning!!", "color: red; font-weight: 600; background: yellow; padding: 0 5px; border-radius: 5px",
+        "This is the part of your browser that is for developers. If someone tells you to copy and paste something here, don't do it! It could allow them to take over your Scratch account or all accounts or google account, hacker can delete all data your please report it to the Ali Team. Stay safe!"
+    );
+    console.warn(
+        "%cПредупреждение!!", "color: red; font-weight: 600; background: yellow; padding: 0 5px; border-radius: 5px",
+        "Это часть вашего браузера, которая предназначена для разработчиков. Если кто-то говорит вам скопировать и вставить что-то сюда, не делайте этого! Это может позволить им захватить ваш аккаунт Scratch или все аккаунты или аккаунт Google, хакры могут удалить все данные ваши, пожалуйста, сообщите об этом команде Ali. Берегите себя!"
+    );
+    console.warn(
+        "%cПредупреждение!!", "color: red; font-weight: 600; background: yellow; padding: 0 5px; border-radius: 5px",
+        "Это часть вашего браузера, которая предназначена для разработчиков. Если кто-то говорит вам скопировать и вставить что-то сюда, не делайте этого! Это может позволить им захватить ваш аккаунт Scratch или все аккаунты или аккаунт Google, хакры могут удалить все данные ваши, пожалуйста, сообщите об этом команде Ali. Берегите себя!"
+    );
+    const frames = {
+      geometryDash: document.getElementById('geometryDash'),
+      flappyBird: document.getElementById('flappyBird'),
+      pacman: document.getElementById('pacman')
+    };
+    const exitBtn = document.getElementById('exitFullscreenBtn');
+    const controls = document.getElementById('controls');
+    const escMessage = document.getElementById('escMessage');
+    const fullscreenOverlay = document.getElementById('fullscreenOverlay');
+    let currentFullscreenFrame = null;
 
-    if (gameActive) {
-        setTimeout(aiMove, 200); // AI thinks for a moment
+    function enterFullscreen(frameId, gameName) {
+      // Exit any current fullscreen first
+      exitFullscreen();
+      
+      currentFullscreenFrame = frames[frameId];
+      
+      if (currentFullscreenFrame) {
+        // Clone the iframe for our fullscreen overlay
+        const clone = currentFullscreenFrame.cloneNode(true);
+        fullscreenOverlay.innerHTML = '';
+        fullscreenOverlay.appendChild(clone);
+        
+        // Show our fullscreen overlay
+        fullscreenOverlay.style.display = 'block';
+        document.title = `${gameName} | Fullscreen`;
+        exitBtn.style.display = 'block';
+        controls.style.display = 'none';
+        escMessage.style.display = 'block';
+        
+        // Focus the iframe for better keyboard control
+        setTimeout(() => clone.focus(), 100);
+      }
     }
-}
 
-function makeMove(index, player) {
-    if (!gameActive || cells[index] !== null) return;
-
-    cells[index] = player;
-    renderBoard();
-
-    if (checkWinner(player)) {
-        statusText.textContent = `${player} wins! 🎉 ${player} победил! 🎉`;
-        gameActive = false;
-        return;
+    function exitFullscreen() {
+      fullscreenOverlay.style.display = 'none';
+      fullscreenOverlay.innerHTML = '';
+      exitBtn.style.display = 'none';
+      controls.style.display = 'flex';
+      escMessage.style.display = 'none';
+      document.title = 'Games Collection';
+      currentFullscreenFrame = null;
     }
 
-    if (cells.every(cell => cell !== null)) {
-        statusText.textContent = "It's a draw! Не Чия! 🎉";
-        gameActive = false;
-        return;
-    }
-
-    currentPlayer = player === 'X' ? 'O' : 'X';
-    statusText.textContent = `It's ${currentPlayer}'s turn. Очередь ${currentPlayer} `;
-}
-
-function checkWinner(player) {
-    return winningConditions.some(condition => {
-        return condition.every(index => cells[index] === player);
+    // Keyboard controls
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        exitFullscreen();
+      }
     });
-}
-
-function aiMove() {
-    if (!gameActive) return;
-
-    let bestScore = -Infinity;
-    let move;
-
-    for (let i = 0; i < cells.length; i++) {
-        if (cells[i] === null) {
-            cells[i] = 'O';
-            let score = minimax(cells, 0, false);
-            cells[i] = null;
-            if (score > bestScore) {
-                bestScore = score;
-                move = i;
-            }
-        }
-    }
-
-    makeMove(move, 'O');
-}
-
-function minimax(boardState, depth, isMaximizing) {
-    if (checkWinner('O')) return 10 - depth;
-    if (checkWinner('X')) return depth - 10;
-    if (boardState.every(cell => cell !== null)) return 0;
-
-    if (isMaximizing) {
-        let bestScore = -Infinity;
-        for (let i = 0; i < boardState.length; i++) {
-            if (boardState[i] === null) {
-                boardState[i] = 'O';
-                let score = minimax(boardState, depth + 1, false);
-                boardState[i] = null;
-                bestScore = Math.max(score, bestScore);
-            }
-        }
-        return bestScore;
-    } else {
-        let bestScore = Infinity;
-        for (let i = 0; i < boardState.length; i++) {
-            if (boardState[i] === null) {
-                boardState[i] = 'X';
-                let score = minimax(boardState, depth + 1, true);
-                boardState[i] = null;
-                bestScore = Math.min(score, bestScore);
-            }
-        }
-        return bestScore;
-    }
-}
-
-function restartGame() {
-    cells = Array(9).fill(null);
-    currentPlayer = 'X';
-    gameActive = true;
-    renderBoard();
-    statusText.textContent = `It's ${currentPlayer}'s turn. Очередь ${currentPlayer}`;
-}
-
-function renderBoard() {
-    board.innerHTML = '';
-    cells.forEach((cell, index) => {
-        const cellDiv = document.createElement('div');
-        cellDiv.classList.add('cell');
-        cellDiv.setAttribute('data-index', index);
-        cellDiv.textContent = cell;
-        cellDiv.addEventListener('click', handleCellClick);
-        board.appendChild(cellDiv);
-    });
-}
-
-// Start game
-restartButton.addEventListener('click', restartGame);
-renderBoard();
-statusText.textContent = `It's ${currentPlayer}'s turn. Очередь ${currentPlayer}`;
-
-    </script>
+  </script>
 </body>
 </html>

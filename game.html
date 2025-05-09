@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tic Tac Toe AI</title>
+    <style>
+body {
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+    background-color: #fafafa;
+    margin-top: 50px;
+}
+
+h1 {
+    font-size: 3rem;
+    color: #333;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.cell {
+    width: 100px;
+    height: 100px;
+    background-color: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+}
+
+.cell:hover {
+    background-color: #ccc;
+}
+
+#status {
+    margin-top: 20px;
+    font-size: 1.5rem;
+}
+
+#restartButton {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#restartButton:hover {
+    background-color: #45a049;
+}
+    body {
+      background-color: black;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .download-button {
+      background-color: #1e40af;
+      color: white;
+      font-size: 1.5rem;
+      font-weight: bold;
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.3s ease;
+      display: inline-block;
+      margin: 10px;
+    }
+    .download-button:hover {
+      background-color: #1e3a8a;
+    }
+    .video-container {
+      margin-top: 20px;
+      width: 80%;
+      max-width: 720px;
+    }
+    .video-container iframe {
+      width: 100%;
+      height: 405px;
+      border-radius: 8px;
+      border: none;
+    }
+    </style>
+</head>
+<body>
+    <h1>Tic Tac Toe (Player vs AI)</h1>
+    <div id="gameBoard" class="board"></div>
+    <p id="status"></p>
+    <button id="restartButton">Restart</button>
+    <noscript>
+    <meta http-equiv="refresh" content="0;url=https://alikushbaev.github.io/Sites/Js.html">
+    </noscript>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <a href="https://alikushbaev.github.io/Sites/BatAssistent.html" class="download-button">1</a>
+    <a href="https://alikushbaev.github.io/Sites/IsoByAli.html" class="download-button">2</a>
+    <a href="https://alikushbaev.github.io/Sites/AIAssistent.html" class="download-button">3</a>
+    <a href="https://alikushbaev.github.io/Sites/Su.html" class="download-button">4</a>
+    <a href="https://alikushbaev.github.io/Sites/isorestorepc.html" class="download-button">5</a>
+    <a href="https://alikushbaev.github.io/Sites/game.html" class="download-button">6(Игра)</a>
+    <a href="https://alikushbaev.github.io/Sites/old_apps_versions.html" class="download-button">Старый Версие</a>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSd7GxPHFbdPcSsDz-0R6Wr6QH0H2w8409m0erTYfClegEp26Q/viewform?usp=header" class="download-button">Репорты</a>
+
+    <script>
+const board = document.getElementById('gameBoard');
+const statusText = document.getElementById('status');
+const restartButton = document.getElementById('restartButton');
+
+let cells = Array(9).fill(null);
+let currentPlayer = 'X'; // Player is 'X', AI is 'O'
+let gameActive = true;
+
+const winningConditions = [
+    [0, 1, 2], [3, 4, 5], [6, 7, 8],
+    [0, 3, 6], [1, 4, 7], [2, 5, 8],
+    [0, 4, 8], [2, 4, 6]
+];
+
+function handleCellClick(e) {
+    const cellIndex = e.target.getAttribute('data-index');
+
+    if (cells[cellIndex] || !gameActive || currentPlayer !== 'X') return;
+
+    makeMove(cellIndex, 'X');
+
+    if (gameActive) {
+        setTimeout(aiMove, 200); // AI thinks for a moment
+    }
+}
+
+function makeMove(index, player) {
+    if (!gameActive || cells[index] !== null) return;
+
+    cells[index] = player;
+    renderBoard();
+
+    if (checkWinner(player)) {
+        statusText.textContent = `${player} wins! 🎉 ${player} победил! 🎉`;
+        gameActive = false;
+        return;
+    }
+
+    if (cells.every(cell => cell !== null)) {
+        statusText.textContent = "It's a draw! Не Чия! 🎉";
+        gameActive = false;
+        return;
+    }
+
+    currentPlayer = player === 'X' ? 'O' : 'X';
+    statusText.textContent = `It's ${currentPlayer}'s turn. Очередь ${currentPlayer} `;
+}
+
+function checkWinner(player) {
+    return winningConditions.some(condition => {
+        return condition.every(index => cells[index] === player);
+    });
+}
+
+function aiMove() {
+    if (!gameActive) return;
+
+    let bestScore = -Infinity;
+    let move;
+
+    for (let i = 0; i < cells.length; i++) {
+        if (cells[i] === null) {
+            cells[i] = 'O';
+            let score = minimax(cells, 0, false);
+            cells[i] = null;
+            if (score > bestScore) {
+                bestScore = score;
+                move = i;
+            }
+        }
+    }
+
+    makeMove(move, 'O');
+}
+
+function minimax(boardState, depth, isMaximizing) {
+    if (checkWinner('O')) return 10 - depth;
+    if (checkWinner('X')) return depth - 10;
+    if (boardState.every(cell => cell !== null)) return 0;
+
+    if (isMaximizing) {
+        let bestScore = -Infinity;
+        for (let i = 0; i < boardState.length; i++) {
+            if (boardState[i] === null) {
+                boardState[i] = 'O';
+                let score = minimax(boardState, depth + 1, false);
+                boardState[i] = null;
+                bestScore = Math.max(score, bestScore);
+            }
+        }
+        return bestScore;
+    } else {
+        let bestScore = Infinity;
+        for (let i = 0; i < boardState.length; i++) {
+            if (boardState[i] === null) {
+                boardState[i] = 'X';
+                let score = minimax(boardState, depth + 1, true);
+                boardState[i] = null;
+                bestScore = Math.min(score, bestScore);
+            }
+        }
+        return bestScore;
+    }
+}
+
+function restartGame() {
+    cells = Array(9).fill(null);
+    currentPlayer = 'X';
+    gameActive = true;
+    renderBoard();
+    statusText.textContent = `It's ${currentPlayer}'s turn. Очередь ${currentPlayer}`;
+}
+
+function renderBoard() {
+    board.innerHTML = '';
+    cells.forEach((cell, index) => {
+        const cellDiv = document.createElement('div');
+        cellDiv.classList.add('cell');
+        cellDiv.setAttribute('data-index', index);
+        cellDiv.textContent = cell;
+        cellDiv.addEventListener('click', handleCellClick);
+        board.appendChild(cellDiv);
+    });
+}
+
+// Start game
+restartButton.addEventListener('click', restartGame);
+renderBoard();
+statusText.textContent = `It's ${currentPlayer}'s turn. Очередь ${currentPlayer}`;
+
+    </script>
+</body>
+</html>
